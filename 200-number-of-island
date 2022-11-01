@@ -1,0 +1,43 @@
+class Solution {
+public:
+    char grid_replica[305][305];
+    int n, m = 1;
+    void DFS(int x, int y){
+        if(x < 0 || y < 0 || x == m || y == n)
+            return;
+        
+        if(grid_replica[x][y] != '1')
+            return;
+        
+        if(grid_replica[x][y] == '1')
+            grid_replica[x][y] = '0';
+        
+        DFS(x, y+1);
+        DFS(x, y-1);
+        DFS(x+1, y);
+        DFS(x-1, y);  
+    }
+    
+    int numIslands(vector<vector<char>>& grid) {
+        m = grid.size();
+        n = grid[0].size();
+        for (int i=0; i<grid.size(); i++) {
+            for (int j=0; j<grid[i].size(); j++) {
+                grid_replica[i][j] = grid[i][j];
+            }
+        }
+        
+        int cnt = 0;
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; j++) {
+                if (grid_replica[i][j] == '1') {
+                    DFS(i ,j);
+                    cnt++;
+                }
+            }
+        }
+        
+        
+        return cnt;
+    }
+};
